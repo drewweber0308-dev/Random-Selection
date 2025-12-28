@@ -1,0 +1,251 @@
+:root{
+  --text: rgba(255,255,255,.92);
+  --border: rgba(255,255,255,.14);
+
+  --bgBase1: rgba(10,14,30,.94);
+  --bgBase2: rgba(6,9,18,.97);
+  --g1: rgba(255,180,80,.16);
+  --g2: rgba(255,99,199,.14);
+  --g3: rgba(79,140,255,.12);
+
+  --coinA:#ffd3a4;
+  --coinB:#ff6a3d;
+  --coinEdgeA:#c18a2c;
+  --coinEdgeB:#7a551a;
+  --ink: rgba(0,0,0,.62);
+
+  --size: 360px;
+  --thickness: 46px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color:var(--text);
+  overflow:hidden;
+
+  background:
+    radial-gradient(1600px 1200px at 18% 12%, var(--g1), rgba(0,0,0,0) 70%),
+    radial-gradient(1600px 1200px at 85% 18%, var(--g2), rgba(0,0,0,0) 72%),
+    radial-gradient(1800px 1400px at 50% 92%, var(--g3), rgba(0,0,0,0) 72%),
+    linear-gradient(120deg, var(--bgBase1), var(--bgBase2));
+}
+
+/* Themes */
+body[data-theme="sunset"]{
+  --g1: rgba(255,180,80,.16);
+  --g2: rgba(255,99,199,.14);
+  --g3: rgba(79,140,255,.12);
+  --coinA:#ffd3a4; --coinB:#ff6a3d;
+  --coinEdgeA:#c18a2c; --coinEdgeB:#7a551a;
+  --ink: rgba(0,0,0,.62);
+}
+body[data-theme="aurora"]{
+  --g1: rgba(79,140,255,.18);
+  --g2: rgba(139,124,255,.14);
+  --g3: rgba(46,230,214,.14);
+  --coinA:#f7d27a; --coinB:#c99a34;
+  --coinEdgeA:#a57922; --coinEdgeB:#6f4f10;
+  --ink: rgba(0,0,0,.62);
+}
+body[data-theme="ocean"]{
+  --g1: rgba(79,140,255,.20);
+  --g2: rgba(46,230,214,.14);
+  --g3: rgba(120,200,255,.12);
+  --coinA:#c9f3ff; --coinB:#3f7bff;
+  --coinEdgeA:#2a56c7; --coinEdgeB:#16358a;
+  --ink: rgba(0,0,0,.55);
+}
+body[data-theme="neon"]{
+  --g1: rgba(46,230,214,.16);
+  --g2: rgba(255,99,199,.18);
+  --g3: rgba(120,255,180,.12);
+  --coinA:#bffcff; --coinB:#2fe6d6;
+  --coinEdgeA:#0ea59a; --coinEdgeB:#0a6f68;
+  --ink: rgba(0,0,0,.55);
+}
+body[data-theme="mono"]{
+  --g1: rgba(255,255,255,.08);
+  --g2: rgba(255,255,255,.06);
+  --g3: rgba(255,255,255,.05);
+  --coinA:#f0f0f0; --coinB:#8e8e8e;
+  --coinEdgeA:#7b7b7b; --coinEdgeB:#4a4a4a;
+  --ink: rgba(0,0,0,.62);
+}
+
+/* HUD */
+.hud{
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 10px;
+  z-index: 10;
+  pointer-events:none;
+}
+.brand{
+  font-weight: 1200;
+  letter-spacing: .2px;
+  font-size: 18px;
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 16px 44px rgba(0,0,0,.55);
+}
+.controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  pointer-events:none;
+}
+.controls select, .controls button{ pointer-events:auto; }
+
+.iconBtn{
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 14px;
+  cursor:pointer;
+  font-weight: 1000;
+  font-size: 16px;
+  backdrop-filter: blur(12px);
+}
+select{
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(6,9,18,.45);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-weight: 1000;
+  outline:none;
+  backdrop-filter: blur(12px);
+}
+
+/* Stage */
+.stage{
+  height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position: relative;
+}
+
+.coinBtn{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  padding:0;
+}
+
+.scene{
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+}
+
+.coin{
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  pointer-events:none;
+}
+
+/* Stable subtle texture */
+.face{
+  position:absolute;
+  inset:0;
+  border-radius: 999px;
+  backface-visibility: hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+
+  background-image:
+    repeating-linear-gradient(
+      115deg,
+      rgba(255,255,255,.05) 0px,
+      rgba(255,255,255,.05) 2px,
+      rgba(0,0,0,.03) 4px,
+      rgba(0,0,0,.03) 6px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.04) 0px,
+      rgba(255,255,255,.04) 1px,
+      rgba(0,0,0,.03) 3px,
+      rgba(0,0,0,.03) 4px
+    ),
+    linear-gradient(135deg, var(--coinA), var(--coinB));
+
+  box-shadow:
+    inset 0 0 0 14px rgba(255,255,255,.06),
+    inset 0 0 0 1px rgba(0,0,0,.18);
+}
+
+.innerRing{
+  position:absolute;
+  inset: 26px;
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,.14);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.08);
+  opacity: .9;
+}
+
+.label{
+  font-size: 58px;
+  font-weight: 1300;
+  letter-spacing: 2px;
+  color: var(--ink);
+  text-shadow: 0 1px 0 rgba(255,255,255,.10);
+  user-select:none;
+}
+
+/* X flip correct orientation */
+.face.heads{ transform: translateZ(calc(var(--thickness) / 2)); }
+.face.tails{ transform: rotateX(180deg) translateZ(calc(var(--thickness) / 2)); }
+
+/* Clean edge */
+.edge{
+  position:absolute;
+  inset: 0;
+  border-radius: 999px;
+  transform: translateZ(0);
+  pointer-events:none;
+
+  background: linear-gradient(180deg, var(--coinEdgeA), var(--coinEdgeB));
+  opacity: .95;
+
+  box-shadow:
+    inset 0 0 0 18px rgba(0,0,0,.14),
+    inset 0 0 0 2px rgba(255,255,255,.06);
+
+  clip-path: circle(46% at 50% 50%);
+}
+
+/* Result */
+.result{
+  position:absolute;
+  bottom: 60px;
+  left: 0; right: 0;
+  text-align:center;
+  font-weight: 1100;
+  letter-spacing: 1px;
+  font-size: 28px;
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 20px 70px rgba(0,0,0,.70);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 240ms ease, transform 240ms ease;
+  pointer-events:none;
+}
+.result.show{
+  opacity: 1;
+  transform: translateY(0px);
+}

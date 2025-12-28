@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Random Selection — Coin Flip</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body data-theme="sunset">
+  <header class="hud">
+    <div class="brand">Random Selection</div>
+
+    <div class="controls">
+      <button class="iconBtn" id="soundBtn" aria-label="Toggle sound">🔊</button>
+
+      <select id="theme" aria-label="Theme">
+        <option value="sunset">Sunset</option>
+        <option value="aurora">Aurora</option>
+        <option value="ocean">Ocean</option>
+        <option value="neon">Neon</option>
+        <option value="mono">Mono</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="stage">
+    <button id="coinBtn" class="coinBtn" aria-label="Flip coin">
+      <div class="scene">
+        <div class="coin" id="coin" aria-hidden="true">
+          <div class="face heads">
+            <div class="innerRing"></div>
+            <div class="label">HEADS</div>
+          </div>
+
+          <div class="face tails">
+            <div class="innerRing"></div>
+            <div class="label">TAILS</div>
+          </div>
+
+          <div class="edge" aria-hidden="true"></div>
+        </div>
+      </div>
+    </button>
+
+    <div class="result" id="result"></div>
+  </main>
+</body>
+</html>
