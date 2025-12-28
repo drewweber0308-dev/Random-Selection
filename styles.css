@@ -126,15 +126,26 @@ select{
   backdrop-filter: blur(12px);
 }
 
-/* Stage */
+/* Stage layout FIXED */
 .stage{
   height: 100vh;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   position: relative;
+  gap: 0;
 }
 
+.seo-title{
+  margin-bottom: 24px;
+  font-size: 28px;
+  font-weight: 800;
+  color: rgba(255,255,255,.9);
+  pointer-events:none;
+}
+
+/* Coin */
 .coinBtn{
   border:none;
   background:transparent;
@@ -156,7 +167,7 @@ select{
   pointer-events:none;
 }
 
-/* Stable subtle texture */
+/* Faces */
 .face{
   position:absolute;
   inset:0;
@@ -195,7 +206,6 @@ select{
   border-radius: 999px;
   border: 2px solid rgba(0,0,0,.14);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.08);
-  opacity: .9;
 }
 
 .label{
@@ -207,34 +217,25 @@ select{
   user-select:none;
 }
 
-/* X flip correct orientation */
+/* 3D positioning */
 .face.heads{ transform: translateZ(calc(var(--thickness) / 2)); }
 .face.tails{ transform: rotateX(180deg) translateZ(calc(var(--thickness) / 2)); }
 
-/* Clean edge */
+/* Edge */
 .edge{
   position:absolute;
   inset: 0;
   border-radius: 999px;
-  transform: translateZ(0);
-  pointer-events:none;
-
   background: linear-gradient(180deg, var(--coinEdgeA), var(--coinEdgeB));
-  opacity: .95;
-
+  clip-path: circle(46% at 50% 50%);
   box-shadow:
     inset 0 0 0 18px rgba(0,0,0,.14),
     inset 0 0 0 2px rgba(255,255,255,.06);
-
-  clip-path: circle(46% at 50% 50%);
 }
 
 /* Result */
 .result{
-  position:absolute;
-  bottom: 60px;
-  left: 0; right: 0;
-  text-align:center;
+  margin-top: 24px;
   font-weight: 1100;
   letter-spacing: 1px;
   font-size: 28px;
@@ -248,4 +249,14 @@ select{
 .result.show{
   opacity: 1;
   transform: translateY(0px);
+}
+
+.seo-text{
+  margin-top: 28px;
+  max-width: 620px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255,255,255,.65);
+  text-align:center;
+  pointer-events:none;
 }
